@@ -25,217 +25,81 @@ def landing_ui():
     """Create the main landing page UI for CorporateProfileX"""
 
     with gr.Blocks() as demo:
-        # Custom CSS for modern trendy design
-        demo.css = """
-        * {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        # Direct style injection with maximum specificity
+        gr.HTML(
+            """
+        <style>
+        :root {
+            --primary-blue: #12284C;
+            --accent-yellow: #FDB913;
+            --text-grey: #404040;
+            --bg-white: #FFFFFF;
         }
         
-        body {
-            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
-            min-height: 100vh;
+        body, .gradio-container {
+            background: linear-gradient(135deg, #FFFFFF 0%, #F5F5F5 100%) !important;
         }
         
-        .header-container {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            padding: 3rem 2rem;
-            border-radius: 20px;
-            margin-bottom: 2rem;
-            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.4);
-            text-align: center;
+        .gradio-container {
+            color: var(--text-grey) !important;
         }
         
-        .header-container h1 {
-            color: #ffffff;
-            font-size: 3rem;
-            font-weight: 700;
-            margin: 0;
-            text-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--primary-blue) !important;
         }
         
-        .header-container p {
-            color: #e0e7ff;
-            font-size: 1.3rem;
-            margin: 0.5rem 0 0 0;
-            font-weight: 300;
-        }
-        
-        .search-section {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 2.5rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin: 2rem 0;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
-        
-        .search-section h2 {
-            color: #667eea;
-            font-size: 1.8rem;
-            margin-top: 0;
-            font-weight: 600;
-        }
-        
-        .search-input-wrapper {
-            margin: 1.5rem 0;
-        }
-        
-        .search-input-wrapper input {
-            background: rgba(255, 255, 255, 0.1) !important;
-            border: 2px solid rgba(102, 126, 234, 0.5) !important;
-            border-radius: 12px !important;
-            color: #ffffff !important;
-            font-size: 1.1rem !important;
-            padding: 15px 20px !important;
-            transition: all 0.3s ease !important;
-        }
-        
-        .search-input-wrapper input:focus {
-            background: rgba(255, 255, 255, 0.15) !important;
-            border-color: #667eea !important;
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.4) !important;
-        }
-        
-        .button-group {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .button-group button {
-            flex: 1;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+        button {
+            background: linear-gradient(135deg, #12284C 0%, #1a3a6b 100%) !important;
             color: white !important;
-            border: none !important;
+            border: 2px solid #12284C !important;
+            border-radius: 8px !important;
+        }
+        
+        button:hover {
+            background: linear-gradient(135deg, #FDB913 0%, #ffb700 100%) !important;
+            color: #12284C !important;
+            border-color: #FDB913 !important;
+        }
+        
+        input, textarea {
+            background: white !important;
+            color: var(--text-grey) !important;
+            border: 2px solid var(--primary-blue) !important;
+            border-radius: 8px !important;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: var(--accent-yellow) !important;
+            box-shadow: 0 0 15px rgba(253, 185, 19, 0.3) !important;
+        }
+        
+        .group-box, .component-box {
+            background: white !important;
+            border: 2px solid var(--primary-blue) !important;
             border-radius: 12px !important;
-            padding: 14px 28px !important;
-            font-size: 1rem !important;
+            box-shadow: 0 4px 15px rgba(18, 40, 76, 0.1) !important;
+        }
+        
+        .label {
+            color: var(--primary-blue) !important;
             font-weight: 600 !important;
-            cursor: pointer !important;
-            transition: all 0.3s ease !important;
-            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3) !important;
         }
-        
-        .button-group button:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.5) !important;
-        }
-        
-        .button-group button:active {
-            transform: translateY(0) !important;
-        }
-        
-        .results-section {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 2rem;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            margin-top: 2rem;
-            min-height: 200px;
-        }
-        
-        .results-section h2 {
-            color: #667eea;
-            font-size: 1.8rem;
-            margin-top: 0;
-            font-weight: 600;
-        }
-        
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 1.5rem;
-            margin: 2rem 0;
-        }
-        
-        .feature-card {
-            background: rgba(102, 126, 234, 0.1);
-            border: 2px solid rgba(102, 126, 234, 0.3);
-            border-radius: 16px;
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-        
-        .feature-card:hover {
-            background: rgba(102, 126, 234, 0.15);
-            border-color: #667eea;
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.2);
-        }
-        
-        .feature-card h3 {
-            color: #667eea;
-            margin-top: 0;
-            font-size: 1.3rem;
-        }
-        
-        .feature-card p {
-            color: #b4b8d1;
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-        
-        .info-section {
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 16px;
-            padding: 2rem;
-            margin-top: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .info-section h3 {
-            color: #667eea;
-            font-size: 1.5rem;
-        }
-        
-        .info-section p, .info-section li {
-            color: #b4b8d1;
-            line-height: 1.8;
-        }
-        
-        .info-section table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 1rem 0;
-        }
-        
-        .info-section table th {
-            background: rgba(102, 126, 234, 0.2);
-            color: #667eea;
-            padding: 12px;
-            text-align: left;
-            border-bottom: 2px solid rgba(102, 126, 234, 0.3);
-            font-weight: 600;
-        }
-        
-        .info-section table td {
-            padding: 12px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            color: #b4b8d1;
-        }
-        
-        .info-section table tr:hover {
-            background: rgba(102, 126, 234, 0.1);
-        }
-        
-        .markdown h1, .markdown h2, .markdown h3 {
-            color: #667eea !important;
-        }
-        
-        .markdown p, .markdown li {
-            color: #b4b8d1 !important;
-        }
+        </style>
         """
+        )
 
         # Header
         gr.HTML(
             """
-        <div class="header-container">
-            <h1>🎯 CorporateProfileX</h1>
-            <p>Next-Gen AI-Powered Corporate Intelligence Platform</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; padding: 2rem; background: linear-gradient(135deg, #12284C 0%, #1a3a6b 100%); border-radius: 12px; box-shadow: 0 10px 40px rgba(18, 40, 76, 0.2);">
+            <div>
+                <h1 style="color: #FDB913; font-size: 2.5rem; font-weight: 700; margin: 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);">🎯 CorporateProfileX</h1>
+                <p style="color: #FFFFFF; font-size: 1rem; margin: 0.5rem 0 0 0; font-weight: 300; letter-spacing: 0.5px;">Professional AI-Powered Corporate Intelligence Platform</p>
+            </div>
+            <div style="text-align: right;">
+                <div style="font-size: 3.5rem; font-weight: 700; color: #FDB913; letter-spacing: 2px;">NBD</div>
+                <div style="color: #FFFFFF; font-size: 0.8rem; font-weight: 600; letter-spacing: 1px;">Emirates</div>
+            </div>
         </div>
         """
         )
@@ -243,20 +107,17 @@ def landing_ui():
         # Description
         gr.Markdown(
             """
-            ### 📊 What is CorporateProfileX?
+            ### 📊 Platform Overview
             
-            CorporateProfileX is an intelligent platform that leverages **multi-agent AI systems** to:
-            - **Scrape** and aggregate company data from multiple sources
-            - **Extract** key insights and metrics automatically
-            - **Generate** comprehensive corporate profiles in real-time
-            - **Provide** actionable intelligence and competitive analysis
+            CorporateProfileX leverages **multi-agent AI systems** to deliver comprehensive corporate intelligence in real-time.
             """
         )
 
+        gr.Markdown("")  # Spacing
+
         # Search section
-        gr.Markdown(
-            "### 🔍 Start Your Intelligence Gathering"
-        )
+        gr.Markdown("### 🔍 Search Intelligence")
+        gr.Markdown("")  # Spacing
 
         with gr.Group():
             user_input = gr.Textbox(
@@ -277,9 +138,8 @@ def landing_ui():
                 )
 
         # Output section
-        gr.Markdown(
-            "### 📈 Real-Time Results & Insights"
-        )
+        gr.Markdown("### 📈 Results")
+        gr.Markdown("")  # Spacing
 
         output = gr.Markdown(
             value="Results will appear here...",
@@ -302,7 +162,8 @@ def landing_ui():
         )
 
         # Features section
-        gr.Markdown("### ✨ Platform Features")
+        gr.Markdown("### ✨ Key Features")
+        gr.Markdown("")  # Spacing
 
         gr.HTML(
             """
@@ -328,21 +189,13 @@ def landing_ui():
         )
 
         # Info section
-        gr.Markdown("### 💡 Tips & Information")
+        gr.Markdown("### 💡 Quick Tips")
+        gr.Markdown("")  # Spacing
         gr.Markdown(
             """
             **Best Practices:**
-            - Use specific company names for targeted results
+            - Use specific company names for accurate results
             - Add industry keywords for focused searches
-            - Results include web data, financials, and AI-generated insights
-            - Combine multiple queries for comprehensive analysis
-            
-            **What You Get:**
-            - Company Overview & Key Metrics
-            - Leadership & Team Information
-            - Financial Performance Analysis
-            - Industry Trends & Competitive Positioning
-            - AI-Generated Insights & Recommendations
             """
         )
 
