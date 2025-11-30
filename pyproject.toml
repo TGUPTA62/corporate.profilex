@@ -1,7 +1,7 @@
 [project]
-name = "genai-hackathon"
+name = "corporate-profilex"
 version = "0.1.0"
-description = "Add your description here"
+description = "GenAI-powered corporate profiling platform with multi-agent scraping and insights."
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
@@ -21,3 +21,7 @@ dev = [
     "isort>=7.0.0",
     "pytest>=9.0.1",
 ]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["agents", "core", "storage", "ui", "ingestion", "diagrams"]
