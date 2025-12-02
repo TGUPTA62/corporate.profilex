@@ -8,8 +8,8 @@ sys.path.insert(
     0, str(Path(__file__).parent / "src")
 )
 
-from ui.landing_page import landing_ui
+from ui.landing_page import landing_page
 
 if __name__ == "__main__":
-    demo = landing_ui()
+    demo = landing_page()
     demo.launch()
