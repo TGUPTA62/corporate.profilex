@@ -50,8 +50,8 @@ def landing_page():
 
     #heading {
         color: white;
-        font-size: 36px;
-        font-weight: 600;
+        font-size: 40px;
+        font-weight: 500;
         letter-spacing: 0.08em;
         margin: 0;
         # text-transform: uppercase;
@@ -69,8 +69,8 @@ def landing_page():
     }
 
     .section-heading {
-        margin-top: 48px;
-        margin-bottom: 16px;
+        margin-top: 30px;
+        margin-bottom: 10px;
         font-weight: 700;
         color: #003366;
         letter-spacing: 0.05em;
@@ -79,39 +79,18 @@ def landing_page():
     }
 
     /* Textbox styling */
-    .gr-textbox {
-    width: 100% !important;
-    font-size: 18px !important;
-    padding: 18px 24px !important;
-    border-radius: 24px !important;
-    border: 2px solid #2a60b8 !important;
-    background: linear-gradient(145deg, #e6ecf9, #cbd8f7) !important;
-    box-shadow: 
-        inset 2px 2px 6px rgba(255, 255, 255, 0.9),
-        inset -3px -3px 7px rgba(140, 160, 190, 0.7);
-    font-weight: 500;
-    font-family: 'Poppins', sans-serif !important;
-    resize: vertical !important;
-    transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
 
-.gr-textbox::placeholder {
-    color: #6a7aab !important;
-    font-style: italic;
-    letter-spacing: 0.03em;
-}
+     #my_textbox textarea {
 
-.gr-textbox:focus {
-    border-color: #0057ff !important;
-    background: linear-gradient(145deg, #d7e2ff, #a4b8ff) !important;
-    box-shadow:
-        0 0 8px 3px rgba(0, 87, 255, 0.6),
-        inset 2px 2px 6px rgba(255, 255, 255, 0.9),
-        inset -3px -3px 7px rgba(100, 130, 255, 0.8);
-    outline: none !important;
-}
+        border-radius: 8px !important;
+        border: 2px solid #00008B !important;  /* dark blue */
+        resize: none !important;  
+        overflow: hidden !important; 
+    }
 
-    /* Button styling */
+/* Button styling */
+
+
     .custom-blue-btn {
         background-color: #00509e !important;
         color: white !important;
@@ -236,8 +215,10 @@ def landing_page():
 
         with gr.Group():
             user_input = gr.Textbox(
-                placeholder="e.g., Tesla, Elon Musk, AI Startups, Technology Innovation...",
-                label="Enter company name, person, or topic",
+                label=None,
+                show_label=False,
+                elem_id="my_textbox",
+                placeholder="Enter company name e.g., Tesla, Elon Musk, AI Startups, Technology Innovation...",
                 lines=2,
                 scale=4,
                 interactive=True,
