@@ -6,6 +6,8 @@ from ui.services.autocomplete_engine import (
     get_suggestions,
 )
 
+MAX_SUGGESTIONS = 5
+
 
 def stream_progress(
     user_input: str = "",
@@ -117,13 +119,13 @@ def landing_page():
                 interactive=True,
             )
 
-            suggestions_dropdown = gr.Dropdown(
-                choices=[],
-                visible=False,
-                label="Suggestions",
-                interactive=True,
-                elem_id="suggestions_dropdown",
-            )
+            suggestion_buttons = []
+            for i in range(MAX_SUGGESTIONS):
+                btn = gr.Button(
+                    visible=False,
+                    elem_classes="suggestion-btn",
+                )
+                suggestion_buttons.append(btn)
 
             with gr.Row():
                 submit_btn = gr.Button(
@@ -135,31 +137,37 @@ def landing_page():
                     elem_classes="custom-blue-btn",
                 )
 
-        # Callback to update dropdown suggestions
-        def on_user_input(text):
+        def update_suggestions(text):
             suggestions = get_suggestions(text)
-            visible = len(suggestions) > 0
-            return gr.update(
-                choices=suggestions,
-                value=None,
-                visible=visible,
-            )
+            print(
+                f"Input: {text} -> Suggestions: {suggestions}"
+            )  # Debug print
+            updates = []
+            for i in range(MAX_SUGGESTIONS):
+                if i < len(suggestions):
+                    updates.append(
+                        (suggestions[i], True)
+                    )
+                else:
+                    updates.append(("", False))
+            return updates
 
-        # When suggestion selected, update textbox value
-        def on_suggestion_select(selected):
-            return selected
+        def on_suggestion_click(label):
+            print(label)
+            return label
 
-        # Wire events
         user_input.change(
-            fn=on_user_input,
+            fn=update_suggestions,
             inputs=user_input,
-            outputs=suggestions_dropdown,
+            outputs=suggestion_buttons,
         )
-        suggestions_dropdown.change(
-            fn=on_suggestion_select,
-            inputs=suggestions_dropdown,
-            outputs=user_input,
-        )
+        print(suggestion_buttons)
+        for btn in suggestion_buttons:
+            btn.click(
+                fn=on_suggestion_click,
+                inputs=btn,
+                outputs=user_input,
+            )
 
         gr.Markdown(
             "### ⏳ Metro Line Progress",
