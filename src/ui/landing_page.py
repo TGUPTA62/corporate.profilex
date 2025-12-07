@@ -2,6 +2,9 @@ import gradio as gr
 from typing import Generator
 import time
 import os
+from ui.services.autocomplete_engine import (
+    get_suggestions,
+)
 
 
 def stream_progress(
@@ -114,6 +117,14 @@ def landing_page():
                 interactive=True,
             )
 
+            suggestions_dropdown = gr.Dropdown(
+                choices=[],
+                visible=False,
+                label="Suggestions",
+                interactive=True,
+                elem_id="suggestions_dropdown",
+            )
+
             with gr.Row():
                 submit_btn = gr.Button(
                     "🚀 Start Intelligence Search",
@@ -123,6 +134,32 @@ def landing_page():
                     "🔄 Clear Results",
                     elem_classes="custom-blue-btn",
                 )
+
+        # Callback to update dropdown suggestions
+        def on_user_input(text):
+            suggestions = get_suggestions(text)
+            visible = len(suggestions) > 0
+            return gr.update(
+                choices=suggestions,
+                value=None,
+                visible=visible,
+            )
+
+        # When suggestion selected, update textbox value
+        def on_suggestion_select(selected):
+            return selected
+
+        # Wire events
+        user_input.change(
+            fn=on_user_input,
+            inputs=user_input,
+            outputs=suggestions_dropdown,
+        )
+        suggestions_dropdown.change(
+            fn=on_suggestion_select,
+            inputs=suggestions_dropdown,
+            outputs=user_input,
+        )
 
         gr.Markdown(
             "### ⏳ Metro Line Progress",
