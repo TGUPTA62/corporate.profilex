@@ -4,7 +4,7 @@ import time
 
 
 def stream_progress(
-    user_input: str,
+    user_input: str = "",
 ) -> Generator[str, None, None]:
     steps = [
         f"Processing: {user_input}...",
@@ -19,6 +19,37 @@ def stream_progress(
 
 
 def landing_page():
+
+    STAGES = [
+        "User Input Received",
+        "Entity Normalization",
+        "Market & Knowledge Scraping",
+        "Raw Data Landed",
+        "Document Parsing",
+        "Vectorization & RAG Prep",
+        "LLM Reasoning & Insights",
+        "Frontend Output Rendered",
+    ]
+
+    def update_metro(current_stage):
+        svg_content = f"""
+        <svg width="900" height="120" viewBox="0 0 900 120">
+            <!-- Main line -->
+            <line x1="50" y1="60" x2="850" y2="60" stroke="#333" stroke-width="8" stroke-linecap="round"/>
+            
+            <!-- Stations -->
+            {''.join([
+                f'''
+                <circle cx="{80 + i*105}" cy="60" r="22" fill="{"#ff6b6b" if i == current_stage else "#4ecdc4"}" stroke="#333" stroke-width="3"/>
+                <text x="{80 + i*105}" y="{{"78" if i == current_stage else "85"}}" text-anchor="middle" font-size="{"13" if i == current_stage else "11"}" 
+                    font-weight="{"bold" if i == current_stage else "normal"}" fill="{"white" if i == current_stage else "#333"}">{STAGES[i]}</text>
+                '''
+                for i in range(len(STAGES))
+            ])}
+        </svg>
+        """
+        return gr.update(value=svg_content)
+
     with gr.Blocks() as demo:
 
         gr.HTML(
@@ -69,8 +100,8 @@ def landing_page():
     }
 
     .section-heading {
-        margin-top: 30px;
-        margin-bottom: 10px;
+        margin-top: 48px;
+        margin-bottom: 15px;
         font-weight: 700;
         color: #003366;
         letter-spacing: 0.05em;
@@ -170,7 +201,10 @@ def landing_page():
         color: #4a5a7a;
         line-height: 1.4;
     }
-
+    
+    .compact-metro {
+    margin-bottom: 10px !important;
+}
 
 </style>
 
@@ -235,6 +269,69 @@ def landing_page():
                 )
 
         gr.Markdown(
+            "### ⏳ Metro Line Progress",
+            elem_classes="section-heading",
+        )
+
+        gr.HTML(
+            value="""
+    <svg width="100%" height="280" viewBox="0 0 1200 280">
+        <!-- Main line -->
+        <line x1="60" y1="60" x2="1140" y2="60" stroke="#4a5568" stroke-width="6" stroke-linecap="round"/>
+        
+        <!-- Stage 0 - CURRENT (#0077ff) -->
+        <circle cx="100" cy="60" r="28" fill="#0077ff" stroke="#2c3e50" stroke-width="4"/>
+        <text x="100" y="115" text-anchor="middle" font-size="13" font-weight="bold" fill="#2c3e50">User Input</text>
+        <text x="100" y="132" text-anchor="middle" font-size="12" font-weight="600" fill="#2c3e50">Received</text>
+        <text x="100" y="150" text-anchor="middle" font-size="10" fill="#7f8c8d">1/8</text>
+        
+        <!-- Stage 1 -->
+        <circle cx="240" cy="60" r="28" fill="#95a5a6" stroke="#2c3e50" stroke-width="3"/>
+        <text x="240" y="115" text-anchor="middle" font-size="12" font-weight="500" fill="#2c3e50">Entity</text>
+        <text x="240" y="132" text-anchor="middle" font-size="12" fill="#2c3e50">Normalization</text>
+        <text x="240" y="150" text-anchor="middle" font-size="10" fill="#7f8c8d">2/8</text>
+        
+        <!-- Stage 2 -->
+        <circle cx="380" cy="60" r="28" fill="#95a5a6" stroke="#2c3e50" stroke-width="3"/>
+        <text x="380" y="115" text-anchor="middle" font-size="12" font-weight="500" fill="#2c3e50">Market &</text>
+        <text x="380" y="132" text-anchor="middle" font-size="12" fill="#2c3e50">Knowledge Scraping</text>
+        <text x="380" y="150" text-anchor="middle" font-size="10" fill="#7f8c8d">3/8</text>
+        
+        <!-- Stage 3 -->
+        <circle cx="520" cy="60" r="28" fill="#95a5a6" stroke="#2c3e50" stroke-width="3"/>
+        <text x="520" y="115" text-anchor="middle" font-size="12" font-weight="500" fill="#2c3e50">Raw Data</text>
+        <text x="520" y="132" text-anchor="middle" font-size="12" fill="#2c3e50">Landed</text>
+        <text x="520" y="150" text-anchor="middle" font-size="10" fill="#7f8c8d">4/8</text>
+        
+        <!-- Stage 4 -->
+        <circle cx="660" cy="60" r="28" fill="#95a5a6" stroke="#2c3e50" stroke-width="3"/>
+        <text x="660" y="115" text-anchor="middle" font-size="12" font-weight="500" fill="#2c3e50">Document</text>
+        <text x="660" y="132" text-anchor="middle" font-size="12" fill="#2c3e50">Parsing</text>
+        <text x="660" y="150" text-anchor="middle" font-size="10" fill="#7f8c8d">5/8</text>
+        
+        <!-- Stage 5 -->
+        <circle cx="800" cy="60" r="28" fill="#95a5a6" stroke="#2c3e50" stroke-width="3"/>
+        <text x="800" y="115" text-anchor="middle" font-size="12" font-weight="500" fill="#2c3e50">Vectorization</text>
+        <text x="800" y="132" text-anchor="middle" font-size="12" fill="#2c3e50">& RAG Prep</text>
+        <text x="800" y="150" text-anchor="middle" font-size="10" fill="#7f8c8d">6/8</text>
+        
+        <!-- Stage 6 -->
+        <circle cx="940" cy="60" r="28" fill="#95a5a6" stroke="#2c3e50" stroke-width="3"/>
+        <text x="940" y="115" text-anchor="middle" font-size="12" font-weight="500" fill="#2c3e50">LLM Reasoning</text>
+        <text x="940" y="132" text-anchor="middle" font-size="12" fill="#2c3e50">& Insights</text>
+        <text x="940" y="150" text-anchor="middle" font-size="10" fill="#7f8c8d">7/8</text>
+        
+        <!-- Stage 7 -->
+        <circle cx="1080" cy="60" r="28" fill="#95a5a6" stroke="#2c3e50" stroke-width="3"/>
+        <text x="1080" y="115" text-anchor="middle" font-size="12" font-weight="500" fill="#2c3e50">Frontend</text>
+        <text x="1080" y="132" text-anchor="middle" font-size="12" fill="#2c3e50">Output Rendered</text>
+        <text x="1080" y="150" text-anchor="middle" font-size="10" fill="#7f8c8d">8/8</text>
+    </svg>
+    """,
+            elem_classes="compact-metro",
+        )
+
+        gr.Markdown(
             "### 📈 Results",
             elem_classes="section-heading",
         )
@@ -247,13 +344,16 @@ def landing_page():
         submit_btn.click(
             fn=stream_progress,
             inputs=user_input,
-            outputs=progress_log,
+            outputs=[progress_log],
         )
 
         clear_btn.click(
             fn=lambda: ("", ""),
             inputs=None,
-            outputs=[user_input, progress_log],
+            outputs=[
+                user_input,
+                progress_log,
+            ],
         )
 
     return demo
