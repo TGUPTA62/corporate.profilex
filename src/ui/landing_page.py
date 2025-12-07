@@ -1,6 +1,7 @@
 import gradio as gr
 from typing import Generator
 import time
+import os
 
 
 def stream_progress(
@@ -16,6 +17,18 @@ def stream_progress(
     for step in steps:
         yield step
         time.sleep(1)
+
+
+def load_css():
+    current_dir = os.path.dirname(
+        os.path.abspath(__file__)
+    )  # → src/ui
+    css_path = os.path.join(
+        current_dir, "assets", "style.css"
+    )  # → src/ui/assets/style.css
+
+    with open(css_path, "r") as f:
+        return f"<style>{f.read()}</style>"
 
 
 def landing_page():
@@ -52,164 +65,7 @@ def landing_page():
 
     with gr.Blocks() as demo:
 
-        gr.HTML(
-            """
-         <style>
-    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;700;800&display=swap');
-
-    body, .gradio-container {
-        background: #f5f7fa;
-        font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        color: #1a1a1a;
-        line-height: 1.5;
-        letter-spacing: 0.02em;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
-
-    #banner {
-        background: linear-gradient(90deg, #003366 0%, #00509e 100%);
-        padding: 25px 40px 30px 40px;
-        border-radius: 12px;
-        box-shadow: 0 10px 20px rgba(0, 48, 99, 0.35);
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-        position: relative;
-        user-select: none;
-    }
-
-    #heading {
-        color: white;
-        font-size: 40px;
-        font-weight: 500;
-        letter-spacing: 0.08em;
-        margin: 0;
-        # text-transform: uppercase;
-        text-shadow: 0 2px 6px rgba(0,0,0,0.3);
-    }
-
-    #tagline {
-        color: #cfd9e8;
-        font-size: 14px;
-        font-weight: 400;
-        font-style: italic;
-        margin-top: 6px;
-        user-select: none;
-        text-shadow: 0 1px 4px rgba(0,0,0,0.15);
-    }
-
-    .section-heading {
-        margin-top: 48px;
-        margin-bottom: 15px;
-        font-weight: 700;
-        color: #003366;
-        letter-spacing: 0.05em;
-        font-size: 22px;
-        user-select: none;
-    }
-
-    /* Textbox styling */
-
-     #my_textbox textarea {
-
-        border-radius: 8px !important;
-        border: 2px solid #00008B !important;  /* dark blue */
-        resize: none !important;  
-        overflow: hidden !important; 
-    }
-
-/* Button styling */
-
-
-    .custom-blue-btn {
-        background-color: #00509e !important;
-        color: white !important;
-        border: 2.5px solid #003366 !important;
-        border-radius: 16px !important;
-        padding: 8px 20px !important;
-        font-weight: 600 !important;
-        font-size: 14px !important;
-        cursor: pointer !important;
-        box-shadow: 0 6px 12px rgba(0,80,158,0.45);
-        transition: background-color 0.35s ease, border-color 0.35s ease, box-shadow 0.35s ease !important;
-        font-family: 'Poppins', sans-serif !important;
-        user-select: none;
-    }
-
-    .custom-blue-btn:hover {
-        background-color: #0077ff !important;
-        border-color: #004a90 !important;
-        box-shadow: 0 8px 18px rgba(0,119,255,0.6);
-        color: white !important;
-    }
-
-    /* Make progress log full width, dynamic height */
-    #progress-log {
-        width: 100% !important;
-        text-align: left !important;
-        white-space: pre-wrap;
-        font-family: 'Courier New', Courier, monospace;
-        background-color: #000000;
-        color: #FFFFFF;
-        padding: 18px 24px;
-        border-radius: 12px;
-        box-sizing: border-box;
-        overflow-x: auto;
-        font-size: 15px;
-        line-height: 1.4;
-        user-select: text;
-        box-shadow: 0 0 14px rgba(0,0,0,0.8);
-    }
-
-
-    .feature-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-        gap: 20px;
-        margin-top: 50px;
-        margin-bottom: 40px;
-    }
-
-    .feature-card {
-        background: white;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 80, 158, 0.12);
-        padding: 24px 28px;
-        text-align: center;
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: default;
-    }
-
-    .feature-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 16px 40px rgba(0, 80, 158, 0.22);
-    }
-
-    .feature-card h3 {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 700;
-        font-size: 20px;
-        color: #003366;
-        margin-bottom: 10px;
-    }
-
-    .feature-card p {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 500;
-        font-size: 14px;
-        color: #4a5a7a;
-        line-height: 1.4;
-    }
-    
-    .compact-metro {
-    margin-bottom: 10px !important;
-}
-
-</style>
-
-            """
-        )
+        gr.HTML(load_css())
 
         with gr.Row(elem_id="banner"):
             gr.HTML(
