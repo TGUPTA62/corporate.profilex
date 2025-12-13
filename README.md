@@ -1,15 +1,13 @@
 # CorporateProfileX
 
-![CorporateProfileX UI Screenshot](./src/ui/assets/ui_screenshot.png)  
-*Screenshot of the CorporateProfileX user interface*
-
----
-
-## Project Description
-
 **CorporateProfileX** is a smart GenAI-powered corporate information profiler that provides real-time insights and advanced analytics on companies and entities. The app leverages multi-agent AI to scrape market data, perform entity normalization, parse documents, vectorize data, and generate meaningful insights using large language models (LLMs).
 
 The intuitive UI features a metro-line style progress tracker, autocomplete suggestions, and a streaming progress log to keep users informed about the ongoing analysis steps.
+
+
+*Screenshot of the CorporateProfileX user interface*
+![CorporateProfileX UI Screenshot](./src/ui/assets/ui_screenshot.png)  
+
 
 ---
 
