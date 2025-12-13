@@ -133,9 +133,7 @@ def landing_ui():
                     variant="primary",
                     scale=2,
                 )
-                clear_btn = gr.Button(
-                    "🔄 Clear Results", scale=1
-                )
+                clear_btn = gr.Button("🔄 Clear Results", scale=1)
 
         # Output section
         gr.Markdown("### 📈 Results")

@@ -30,21 +30,11 @@ def get_suggestions(query: str):
         scorer=fuzz.WRatio,
         limit=5,
     )
-    fuzzy_suggestions = [
-        name
-        for name, score, _ in fuzzy_results
-        if score > 50
-    ]
+    fuzzy_suggestions = [name for name, score, _ in fuzzy_results if score > 50]
 
     # Spell correction
-    spell_suggestions = difflib.get_close_matches(
-        query, COMPANY_LIST, n=3, cutoff=0.5
-    )
+    spell_suggestions = difflib.get_close_matches(query, COMPANY_LIST, n=3, cutoff=0.5)
 
     # Merge & unique
-    final_list = list(
-        dict.fromkeys(
-            fuzzy_suggestions + spell_suggestions
-        )
-    )
+    final_list = list(dict.fromkeys(fuzzy_suggestions + spell_suggestions))
     return final_list

@@ -9,25 +9,24 @@ from ui.services.autocomplete_engine import (
 MAX_SUGGESTIONS = 5
 
 
-def stream_progress(
-    user_input: str = "",
-) -> Generator[str, None, None]:
+def stream_progress(user_input: str = "", history="") -> Generator[str, None, None]:
+
+    history += f"<span style='color:#ffffff; font-family: Courier New, monospace;'>Starting process for ... : {user_input}\n\n"
     steps = [
-        f"Processing: {user_input}...",
-        "Scraping web data...",
-        "Analyzing results...",
-        "Generating insights...",
-        f"**Results for:** {user_input}\n\n- Result 1\n- Result 2\n- Result 3",
+        f"<span style='color:#ffffff;'>Processing: {user_input}...",
+        "<span style='color:#ffffff;'>Scraping web data...",
+        "<span style='color:#ffffff;'>Analyzing results...",
+        "<span style='color:#ffffff;'>Generating insights...",
+        f"<span style='color:#ffffff;'>**Results for:** {user_input}\n\n- Result 1\n- Result 2\n- Result 3",
     ]
     for step in steps:
-        yield step
+        history += step + "\n\n"
         time.sleep(1)
+        yield history
 
 
 def load_css():
-    current_dir = os.path.dirname(
-        os.path.abspath(__file__)
-    )  # → src/ui
+    current_dir = os.path.dirname(os.path.abspath(__file__))  # → src/ui
     css_path = os.path.join(
         current_dir, "assets", "style.css"
     )  # → src/ui/assets/style.css
@@ -114,7 +113,7 @@ def landing_page():
                 show_label=False,
                 elem_id="my_textbox",
                 placeholder="Enter company name e.g., Tesla, Elon Musk, AI Startups, Technology Innovation...",
-                lines=2,
+                lines=1,  # single line textbox
                 scale=4,
                 interactive=True,
             )
@@ -139,15 +138,13 @@ def landing_page():
 
         def update_suggestions(text):
             suggestions = get_suggestions(text)
-            print(
-                f"Input: {text} -> Suggestions: {suggestions}"
-            )  # Debug print
+            # print(
+            #     f"Input: {text} -> Suggestions: {suggestions}"
+            # )  # Debug print
             updates = []
             for i in range(MAX_SUGGESTIONS):
                 if i < len(suggestions):
-                    updates.append(
-                        (suggestions[i], True)
-                    )
+                    updates.append((suggestions[i], True))
                 else:
                     updates.append(("", False))
             return updates
@@ -170,7 +167,7 @@ def landing_page():
             )
 
         gr.Markdown(
-            "### ⏳ Metro Line Progress",
+            "### ⏳ Pipeline Progress",
             elem_classes="section-heading",
         )
 
@@ -242,9 +239,17 @@ def landing_page():
             elem_id="progress-log",
         )
 
+        # Connect button click
         submit_btn.click(
             fn=stream_progress,
-            inputs=user_input,
+            inputs=[user_input, progress_log],
+            outputs=[progress_log],
+        )
+
+        # Also connect textbox submit (pressing Enter) to trigger the same function and update the log
+        user_input.submit(
+            fn=stream_progress,
+            inputs=[user_input, progress_log],
             outputs=[progress_log],
         )
 

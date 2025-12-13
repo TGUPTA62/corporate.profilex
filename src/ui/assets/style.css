@@ -14,7 +14,7 @@ body, .gradio-container {
     background: linear-gradient(90deg, #003366 0%, #00509e 100%);
     padding: 25px 40px 30px 40px;
     border-radius: 12px;
-    box-shadow: 0 10px 20px rgba(0, 48, 99, 0.35);
+    box-shadow: 0 10px 20px #00306359;
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
@@ -55,10 +55,21 @@ body, .gradio-container {
 
     #my_textbox textarea {
 
-    border-radius: 8px !important;
-    border: 2px solid #00008B !important;  /* dark blue */
-    resize: none !important;  
-    overflow: hidden !important; 
+    font-family: 'Poppins', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #1a1a1a;
+    background-color: #F9FAFB;
+    border: 2.5px solid #003366; /* Dark blue border */
+    border-radius: 12px;
+    text-align: center;
+    padding: 16px 16px;
+    box-shadow: 0 4px 12px rgba(0, 48, 99, 0.25);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    resize: none; /* Disable resizing */
+    white-space: pre-wrap !important;  /* Wrap text */
+    overflow-x: hidden !important;     /* Hide horizontal scrollbar */
+    word-wrap: break-word !important;  /* Break long words */
 }
 
 /* Button styling */
@@ -92,18 +103,27 @@ body, .gradio-container {
     text-align: left !important;
     white-space: pre-wrap;
     font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;       /* adjust font size */
+    color: #ffffff;        /* change text color (example: bright green) */
+    /* background-color: #708090; */
+
     background-color: #000000;
-    color: #FFFFFF;
     padding: 18px 24px;
     border-radius: 12px;
     box-sizing: border-box;
     overflow-x: auto;
+    overflow-y: auto;  /* allow vertical scrolling */
+    max-height: 250px; /* limit height to show scroll bar if needed */
     font-size: 15px;
     line-height: 1.4;
     user-select: text;
     box-shadow: 0 0 14px rgba(0,0,0,0.8);
 }
 
+::selection {
+    background-color: #00509e;
+    color: #ffffff;
+}
 
 .feature-grid {
     display: grid;
