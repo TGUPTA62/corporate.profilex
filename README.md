@@ -1,6 +1,6 @@
 # CorporateProfileX
 
-![CorporateProfileX UI Screenshot](./ui/assets/ui_screenshot.png)  
+![CorporateProfileX UI Screenshot](./src/ui/assets/ui_screenshot.png)  
 *Screenshot of the CorporateProfileX user interface*
 
 ---
