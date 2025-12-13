@@ -41,8 +41,10 @@ pip install -r requirements.txt
 
 ### 3.3 Run the app
 ```
-pythion app.py
+python app.py
 ```
+
+---
 
 ## Usuage 
 
@@ -57,6 +59,8 @@ pythion app.py
 
 - Results will be displayed in the progress log with insights and extracted data.
 
+---
+
 ## Folder Structure
 
 ├── app.py                         # Main app entrypoint
@@ -69,6 +73,8 @@ pythion app.py
 ├── requirements.txt               # Python dependencies
 └── README.md                     # This file
 
+---
+
 ## Notes
 
 Ensure your environment has internet access to load Google Fonts used in the CSS.
@@ -76,3 +82,5 @@ Ensure your environment has internet access to load Google Fonts used in the CSS
 The autocomplete suggestions backend must be properly configured for suggestions to work.
 
 Feel free to customize the CSS in style.css for branding or visual tweaks.
+
+---
